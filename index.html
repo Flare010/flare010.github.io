@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FLARE010 – Vanilla VARO Community-Projekt. 20 Spieler, ein Leben, schrumpfende World Border.">
+<title>FLARE010 — Vanilla VARO</title>
+<link rel="icon" href="logo.png" type="image/png" sizes="32x32">
+<style>
+:root{
+  --red:#e50914;
+  --red-bright:#ff1b26;
+  --red-dark:#7d0008;
+  --black:#070707;
+  --black-2:#0d0d0d;
+  --panel:#121212;
+  --panel-2:#181818;
+  --text:#f5f5f5;
+  --muted:#a7a7a7;
+  --line:rgba(229,9,20,.28);
+  --glow:rgba(229,9,20,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(229,9,20,.14),transparent 35%),
+    linear-gradient(180deg,var(--black),#0a0001 55%,var(--black));
+  color:var(--text);
+  line-height:1.6;
+}
+body:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;opacity:.035;
+  background-image:linear-gradient(rgba(255,255,255,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.8) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,92%);margin:auto}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:20;
+  background:rgba(7,7,7,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:900;letter-spacing:.12em;font-size:1.15rem}
+.brand span{color:var(--red)}
+.nav-links{display:flex;gap:26px;color:#ccc;font-size:.9rem}
+.nav-links a:hover{color:white}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 22px;border-radius:8px;font-weight:800;
+  border:1px solid var(--red);background:var(--red);
+  box-shadow:0 0 24px var(--glow);transition:.2s;
+}
+.btn:hover{transform:translateY(-2px);background:var(--red-bright)}
+.btn.secondary{background:transparent;box-shadow:none}
+.hero{
+  min-height:760px;display:flex;align-items:center;text-align:center;
+  padding:130px 0 90px;position:relative;overflow:hidden;
+}
+.hero:after{
+  content:"";position:absolute;width:620px;height:620px;border-radius:50%;
+  background:var(--red);filter:blur(180px);opacity:.11;top:15%;left:50%;transform:translateX(-50%);
+}
+.hero-content{position:relative;z-index:1;width:100%}
+.badge{
+  display:inline-block;border:1px solid var(--line);background:rgba(229,9,20,.07);
+  color:#ff7379;border-radius:999px;padding:7px 14px;font-size:.78rem;
+  font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:25px;
+}
+h1{
+  font-size:clamp(4rem,13vw,9.5rem);line-height:.82;
+  font-weight:1000;letter-spacing:-.075em;
+  text-shadow:0 0 55px rgba(229,9,20,.2);
+}
+h1 span{color:var(--red)}
+.hero-sub{max-width:680px;margin:30px auto 34px;color:#c9c9c9;font-size:1.15rem}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  max-width:800px;margin:35px auto;
+}
+.stat{
+  padding:18px 10px;background:rgba(18,18,18,.8);
+  border:1px solid var(--line);border-radius:10px;
+}
+.stat strong{display:block;font-size:1.45rem;color:white}
+.stat small{color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+section{padding:95px 0}
+.section-title{text-align:center;margin-bottom:45px}
+.eyebrow{color:var(--red-bright);font-weight:900;letter-spacing:.15em;text-transform:uppercase;font-size:.75rem}
+h2{font-size:clamp(2rem,5vw,3.3rem);line-height:1.05;margin-top:9px}
+.section-title p{max-width:650px;margin:15px auto;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{
+  background:linear-gradient(145deg,var(--panel-2),var(--panel));
+  border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:28px;
+  position:relative;overflow:hidden;
+}
+.card:before{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--red)}
+.icon{font-size:1.8rem;margin-bottom:15px}
+.card h3{margin-bottom:8px;font-size:1.2rem}
+.card p{color:var(--muted);font-size:.95rem}
+.highlight{
+  background:linear-gradient(135deg,#180002,#0d0d0d);
+  border:1px solid var(--line);border-radius:18px;padding:45px;
+  display:grid;grid-template-columns:1.4fr .8fr;gap:40px;align-items:center;
+}
+.highlight p{color:#bbb;margin-top:15px}
+.progress-wrap{background:#202020;border-radius:999px;height:13px;overflow:hidden;margin:18px 0 9px}
+.progress{width:50%;height:100%;background:linear-gradient(90deg,var(--red-dark),var(--red-bright));box-shadow:0 0 18px var(--glow)}
+.progress-label{display:flex;justify-content:space-between;font-size:.85rem;color:#aaa}
+.steps{counter-reset:steps;display:grid;gap:15px;max-width:780px;margin:auto}
+.step{
+  counter-increment:steps;display:flex;gap:18px;align-items:flex-start;
+  background:var(--panel);border:1px solid rgba(255,255,255,.06);padding:22px;border-radius:12px;
+}
+.step:before{
+  content:counter(steps);flex:0 0 38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;background:var(--red);font-weight:900;
+}
+.step h3{margin-bottom:4px}.step p{color:var(--muted)}
+.faq{max-width:800px;margin:auto}
+details{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;margin:10px 0;padding:18px 20px}
+summary{cursor:pointer;font-weight:800}
+details p{color:var(--muted);padding-top:12px}
+.cta{text-align:center;padding:80px 20px;background:radial-gradient(circle,rgba(229,9,20,.16),transparent 65%)}
+footer{border-top:1px solid var(--line);padding:28px 0;color:#777;font-size:.85rem}
+footer .container{display:flex;justify-content:space-between;gap:20px}
+@media(max-width:800px){
+  .nav-links{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  .highlight{grid-template-columns:1fr;padding:30px}
+}
+@media(max-width:480px){
+  .hero{min-height:700px}
+  .stats{gap:8px}
+  .stat{padding:14px 7px}
+  .stat strong{font-size:1.2rem}
+  section{padding:70px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#top">FLARE<span>010</span></a>
+    <div class="nav-links">
+      <a href="#projekt">Projekt</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn" href="#teilnehmen">Mitmachen</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container hero-content">
+    <div class="badge">Vanilla VARO Community-Projekt</div>
+    <h1>FLARE<span>010</span></h1>
+    <p class="hero-sub">
+      20 Spieler. Ein Leben. Eine schrumpfende Border.<br>
+      Ein paar Stunden entscheiden darüber, wer überlebt.
+    </p>
+    <div class="stats">
+      <div class="stat"><strong>20</strong><small>Spieler</small></div>
+      <div class="stat"><strong>1</strong><small>Leben</small></div>
+      <div class="stat"><strong>Java</strong><small>Edition</small></div>
+      <div class="stat"><strong>PvP</strong><small>Vanilla</small></div>
+    </div>
+    <a class="btn" href="#teilnehmen">Ich will mitmachen</a>
+  </div>
+</header>
+
+<section id="projekt">
+  <div class="container">
+    <div class="section-title">
+      <div class="eyebrow">Das Projekt</div>
+      <h2>VARO, aber kompakt.</h2>
+      <p>FLARE010 ist eine kurze, intensive Vanilla-Hardcore-PvP-Runde, angelehnt an das originale deutsche VARO-Format.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">💀</div>
+        <h3>Nur ein Leben</h3>
+        <p>Stirbst du, ist dein aktives Spiel vorbei. Es gibt keine zweite Chance.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🌍</div>
+        <h3>Die Border schrumpft</h3>
+        <p>Die World Border wird immer kleiner und zwingt die Spieler nach und nach näher zusammen.</p>
+      </article>
+      <article class="card">
+        <div class="icon">⚔️</div>
+        <h3>Pure Vanilla</h3>
+        <p>Keine Mods und keine spielverändernden Plugins. Minecraft Java Edition, PvP und dein eigenes Können.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="highlight">
+      <div>
+        <div class="eyebrow">Aktueller Stand</div>
+        <h2>Die Plätze werden knapp.</h2>
+        <p>Die Teilnahme ist auf 20 Spieler begrenzt. Ein Bewerbungsticket entspricht einem reservierten Teilnehmerplatz.</p>
+        <div class="progress-wrap"><div class="progress"></div></div>
+        <div class="progress-label"><span>10 von 20 Plätzen</span><span>50%</span></div>
+      </div>
+      <div>
+        <div class="stat"><strong>10 / 20</strong><small>Plätze vergeben</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ablauf">
+  <div class="container">
+    <div class="section-title">
+      <div class="eyebrow">Ablauf</div>
+      <h2>So läuft FLARE010 ab.</h2>
+      <p>Das Event ist bewusst auf wenige Stunden ausgelegt, damit die Runde intensiv bleibt.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div><h3>Vorbereitungsphase</h3><p>Zu Beginn gibt es eine Phase ohne PvP, in der du Ressourcen sammeln und dich auf die Runde vorbereiten kannst.</p></div>
+      </div>
+      <div class="step">
+        <div><h3>PvP beginnt</h3><p>Nach der Vorbereitung ist Schluss mit sicherem Farmen. Ab jetzt kann jeder Kampf entscheidend sein.</p></div>
+      </div>
+      <div class="step">
+        <div><h3>Die Border schrumpft</h3><p>Die World Border wird regelmäßig kleiner und bringt die verbleibenden Spieler immer näher zusammen.</p></div>
+      </div>
+      <div class="step">
+        <div><h3>Nur einer kann gewinnen</h3><p>Wer am Ende noch lebt, hat FLARE010 überlebt.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-title">
+      <div class="eyebrow">FAQ</div>
+      <h2>Häufige Fragen</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Wann findet FLARE010 statt?</summary>
+        <p>Der genaue Termin steht noch nicht fest. Geplant ist die Runde für August. Sobald der Termin feststeht, werden die Teilnehmer informiert.</p>
+      </details>
+      <details>
+        <summary>Wie viele Spieler können teilnehmen?</summary>
+        <p>Es gibt insgesamt 20 Plätze. Sobald alle Plätze vergeben sind, sind keine weiteren Anmeldungen möglich.</p>
+      </details>
+      <details>
+        <summary>Was passiert, wenn ich sterbe?</summary>
+        <p>Dein aktives Spiel ist nach dem Tod vorbei. Du kannst anschließend als Zuschauer dabei bleiben.</p>
+      </details>
+      <details>
+        <summary>Welche Version wird verwendet?</summary>
+        <p>FLARE010 wird für Minecraft Java Edition 26.2 veranstaltet.</p>
+      </details>
+      <details>
+        <summary>Wie kann ich mich anmelden?</summary>
+        <p>Die Anmeldung erfolgt über das Discord-Ticketsystem. Eröffne dort ein Bewerbungsticket, solange noch Plätze frei sind.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="teilnehmen">
+  <div class="container">
+    <div class="eyebrow">Bereit?</div>
+    <h2>Willst du dabei sein?</h2>
+    <p style="color:#aaa;max-width:620px;margin:15px auto 25px">
+      Die ersten 20 Teilnehmer erhalten einen Platz. Weitere Informationen und die Bewerbung gibt es auf dem Discord-Server.
+    </p>
+    <!-- Discord-Link hier einsetzen -->
+    <a class="btn" href="https://www.discord.gg/bKxBHT4eVd" target="_blank" rel="noopener">Zum Discord</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 FLARE010</span>
+    <span>Vanilla VARO Community-Projekt</span>
+  </div>
+</footer>
+
+</body>
+</html>
